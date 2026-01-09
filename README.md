@@ -15,17 +15,19 @@ source ~/.$(basename $SHELL)rc
 Create a `.env` file in the project root to store your keys and IDs.
 ```
 # .env
-export DISCORD_WEBHOOK="https://discord.com/api/webhooks/..."
-export DISCORD_USER_ID="123456789012345678"
-export CHAOS_KEY="your_api_key_here"
+# .env
+CHAOS_KEY="your_api_key_here"
+RESULTS_WEBHOOK="https://discord.com/api/webhooks/..."
+STATUS_WEBHOOK="https://discord.com/api/webhooks/..."
+DISCORD_USER_ID="123456789012345678"
 ```
 3. Run a Scan
 ```
 # Single domain
-./run-scopewatch.sh example.com
+./scopewatch.sh example.com
 
 # List of domains with custom rate and ports
-./run-scopewatch.sh targets.txt --rate 100 -p 80,443,8080
+./scopewatch.sh targets.txt --rate 100 -p 80,443,8080
 ```
 ## The Pipeline Stages
 1. Discovery: Combines `subfinder`, `gau`, and `chaos` for deep subdomain enumeration.
@@ -39,10 +41,9 @@ export CHAOS_KEY="your_api_key_here"
 9. Discord: Sends a summary report and pings your user ID.
 
 ## Project Structure
-- `run-scopewatch.sh`: The Manager. Handles input loops and dependency checks.
-- `scopewatch.sh`: The Engine. Executes the 9-stage scanning logic.
+- `scopewatch.sh`: The Manager. Handles input loops and dependency checks.
+- `engine.sh`: The Engine. Executes the 9-stage scanning logic.
 - `install-deps.sh`: The Installer. Sets up the Go environment and PD tools.
-- `test-notify.sh`: The Debugger. Tests your Discord webhook/ping logic.
 - `.env`: The Vault. Stores sensitive API keys and IDs.
 
 ## Options & Flags
