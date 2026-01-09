@@ -29,6 +29,9 @@ DISCORD_USER_ID="123456789012345678"
 ./scopewatch.sh targets.txt --rate 100 -p 80,443,8080
 ```
 
+<img width="1041" height="406" alt="image" src="https://github.com/user-attachments/assets/6894f7d2-fdb3-48fa-a182-b3e5c1e09133" />
+
+
 ## Discord Integration
 ### 1. Setup Channels
 For the best experience, create two separate channels in your Discord server:
@@ -46,6 +49,9 @@ If you want ScopeWatch to "tag" you when a Critical vulnerability is found:
 - Enable Developer Mode.
 - Right-click your own Avatar in any channel and select Copy User ID.
 - Paste this ID into `DISCORD_USER_ID` in `.env`.
+
+<img width="329" height="381" alt="image" src="https://github.com/user-attachments/assets/cbb2fb89-e8ed-411b-8ce1-009c8e2a8c02" />
+
 
 ## The Pipeline Stages
 1. Discovery: Combines `subfinder`, `gau`, and `chaos` for deep subdomain enumeration.
@@ -74,6 +80,7 @@ If you want ScopeWatch to "tag" you when a Critical vulnerability is found:
 | `--rate` | Requests Per Second (RPS) | `60` |
 | `--threads` | Concurrent scan threads | `10` |
 | `--cidr-file` | IP range filter | `cidr_ranges.txt` |
+
 
 ## Requirements
 - Operating System: Linux (Ubuntu/Debian preferred)
