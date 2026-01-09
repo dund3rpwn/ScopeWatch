@@ -167,7 +167,6 @@ send_status() {
 # ---------------- Resolver list refresh ----------------
 if [[ ! -s "$RESOLVERS" ]]; then
     echo -e "${YELLOW}[+] Downloading fresh resolvers...${NC}"
-    # Try downloading with a 10-second timeout
     if ! curl -m 10 -fsSL "https://raw.githubusercontent.com/trickest/resolvers/main/resolvers.txt" -o "$RESOLVERS"; then
         echo -e "${RED}[!] Download failed. Creating emergency fallback resolvers...${NC}"
         {
@@ -196,7 +195,6 @@ if [[ -n "$DOMAIN" ]]; then
     if command -v chaos >/dev/null 2>&1; then
         if [[ -n "$CHAOS_KEY" ]]; then
             echo -e "${CYAN}[*] Fetching Chaos results...${NC}"
-            # Call the variable here
             chaos -d "$DOMAIN" -silent -key "$CHAOS_KEY" -o "$OUTDIR/chaos.txt" || true
         else
             echo -e "${YELLOW}[!] Chaos key not set. Skipping Chaos...${NC}"
@@ -286,7 +284,7 @@ if [[ -s "$NAABU_HOSTS" ]]; then
 
     echo -e "${CYAN}\n[+] Naabu: Discovering ports ($FINAL_PORTS) and fingerprinting with Nmap...${NC}"
     
-    # We dynamically pass the flag ($PORT_FLAG) and the value ($FINAL_PORTS)
+    # Dynamically pass the flag ($PORT_FLAG) and the value ($FINAL_PORTS)
     naabu -list "$NAABU_HOSTS" "$PORT_FLAG" "$FINAL_PORTS" -rate "$RATE" \
         -nmap-cli "nmap -sV --version-intensity 0" \
         -stats -silent -si 30 -json -o "$NAABU_OUT_JSON"
@@ -305,7 +303,6 @@ if [[ -s "$TARGETS_FOR_NUCLEI" ]]; then
     echo -e "${CYAN}[+] Running Nuclei with severity: $SEVERITIES...${NC}"
     on_progress=false
     
-    # -severity now uses the $SEVERITIES variable
     nuclei -l "$TARGETS_FOR_NUCLEI" -severity "$SEVERITIES" \
         -rl "$RATE" -stats -si 30 -jsonl -silent -no-color -o "$NUCLEI_OUT" 2>&1 | \
         sed -u 's/\x1B\[[0-9;]*[JKmsu]//g' | while read -r line; do
@@ -349,9 +346,6 @@ echo -e "${CYAN}[+] Generating Human-Readable Report...${NC}"
 } > "$REPORT_FILE"
 
 if [ -s "$NUCLEI_OUT" ]; then
-    # 1. Flexible naming: (."matched-at" // .matched_at)
-    # 2. Priority Logic: matcher-name > extracted-results
-    # 3. Double-newline: Added via \n in the jq string
     jq -r '
         select(."template-id" != null) |
         .info.severity as $s | 
@@ -416,7 +410,7 @@ if [[ -n "${RESULTS_WEBHOOK:-}" ]]; then
     LOW=$(grep -ic "\[LOW\]" "$REPORT_FILE" 2>/dev/null || true); LOW=${LOW:-0}
     INF=$(grep -ic "\[INFO\]" "$REPORT_FILE" 2>/dev/null || true); INF=${INF:-0}
 
-    # 5. Discord Styling (Dynamic Version)
+    # 5. Discord Styling
     USER_PING=""
     [[ -n "$DISCORD_USER_ID" ]] && USER_PING="<@$DISCORD_USER_ID>"
     
@@ -433,7 +427,7 @@ if [[ -n "${RESULTS_WEBHOOK:-}" ]]; then
         ALERT_MSG="🔸 **High Findings Detected**"
     fi
 
-    # 6. Build Payload (The Bulletproof JQ Version)
+    # 6. Build Payload
     PAYLOAD=$(jq -n \
         --arg target "$TARGET" \
         --arg subs "$SUB_COUNT" \
