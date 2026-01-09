@@ -14,13 +14,12 @@ source ~/.$(basename $SHELL)rc
 2. Configuration (Optional)
 Create a `.env` file in the project root to store your keys and IDs.
 ```
-# .env
-# .env
 CHAOS_KEY="your_api_key_here"
 RESULTS_WEBHOOK="https://discord.com/api/webhooks/..."
 STATUS_WEBHOOK="https://discord.com/api/webhooks/..."
 DISCORD_USER_ID="123456789012345678"
 ```
+
 3. Run a Scan
 ```
 # Single domain
@@ -29,6 +28,25 @@ DISCORD_USER_ID="123456789012345678"
 # List of domains with custom rate and ports
 ./scopewatch.sh targets.txt --rate 100 -p 80,443,8080
 ```
+
+## Discord Integration
+### 1. Setup Channels
+For the best experience, create two separate channels in your Discord server:
+- #scoping-status: For real-time "heartbeat" updates (Stage starts/stops).
+- #scoping-results: For the final report and critical alerts.
+
+### 2. Create Webhooks
+- Right-click the channel -> Edit Channel.
+- Go to Integrations -> Webhooks -> New Webhook.
+- Copy the Webhook URL and paste it into your .env file.
+
+### 3. Enable User Pings
+If you want ScopeWatch to "tag" you when a Critical vulnerability is found:
+- Go to User Settings -> Advanced.
+- Enable Developer Mode.
+- Right-click your own Avatar in any channel and select Copy User ID.
+- Paste this ID into `DISCORD_USER_ID` in `.env`.
+
 ## The Pipeline Stages
 1. Discovery: Combines `subfinder`, `gau`, and `chaos` for deep subdomain enumeration.
 2. Resolution: Validates findings using `dnsx` with smart system fallbacks.
