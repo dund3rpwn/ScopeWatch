@@ -50,6 +50,8 @@ If you want ScopeWatch to "tag" you when a Critical vulnerability is found:
 - Right-click your own Avatar in any channel and select Copy User ID.
 - Paste this ID into `DISCORD_USER_ID` in `.env`.
 
+<img width="435" height="168" alt="image" src="https://github.com/user-attachments/assets/ae5565f4-bb93-4099-867b-1cfc26dd150f" />
+<br><br>
 <img width="329" height="381" alt="image" src="https://github.com/user-attachments/assets/cbb2fb89-e8ed-411b-8ce1-009c8e2a8c02" />
 
 
