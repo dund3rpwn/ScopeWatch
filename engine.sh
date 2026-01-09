@@ -447,7 +447,7 @@ if [[ -n "${RESULTS_WEBHOOK:-}" ]]; then
                 color: ($color | tonumber),
                 fields: [
                     { name: "🔍 Subdomains", value: $subs, inline: true },
-                    { name: "🔌 Open Ports", value: $ports, inline: true },
+                    { name: "🔌 In-Scope Open Ports", value: $ports, inline: true },
                     { name: "🌐 Live URLs", value: $urls, inline: true },
                     { name: "⏱️ Scan Time", value: $duration, inline: true },
                     { 
