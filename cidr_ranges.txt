@@ -1,0 +1,5 @@
+# Add your in-scope CIDR ranges here (one per line)
+# Any IP found during the scan NOT in these ranges will be filtered out.
+# Example:
+# 192.168.1.0/24
+# 10.0.0.0/8
